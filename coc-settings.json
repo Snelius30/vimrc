@@ -1,0 +1,22 @@
+{
+    "coc.preferences.formatOnType": false,
+    "coc.preferences.currentFunctionSymbolAutoUpdate": true,
+    "typescript.suggest.autoImports": false,
+    "diagnostic.enableMessage": "jump",
+    "eslint.autoFixOnSave": true,
+    "languageserver": {
+        "ccls": {
+            "command": "ccls",
+            "filetypes": ["c", "cpp", "cuda", "objc", "objcpp", "cxx"],
+            "rootPatterns": [".ccls-root", "compile_commands.json"],
+            "initializationOptions": {
+                "cache": {
+                    "directory": ".ccls-cache"
+                },
+                "client": {
+                    "snippetSupport": true
+                }
+            }
+        }
+    }
+}
