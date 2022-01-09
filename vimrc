@@ -77,6 +77,7 @@ Plug 'sainnhe/gruvbox-material' " theme
 Plug 'NLKNguyen/papercolor-theme' " theme
 Plug 'arcticicestudio/nord-vim' "theme
 Plug 'sainnhe/everforest' " theme
+Plug 'shapeoflambda/dark-purple.vim' " theme
 call plug#end()
 
 " Markdown
@@ -112,7 +113,8 @@ if system("powershell.exe Get-ItemProperty -Path
     \ \" HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize\"
     \ -Name AppsUseLightTheme | grep AppsUse | awk '{ print $3 }'") == 0
    set background=dark
-   colorscheme everforest
+   "colorscheme everforest
+   colorscheme dark_purple
 else
    set background=light
    colorscheme PaperColor
@@ -123,7 +125,7 @@ map <C-T> :FZF<CR>
 nmap <C-x><C-l> :vs<bar>:b#<CR>
 nmap <C-a><C-i> :normal vi}ga:<CR>
 " splits
-nnoremap <space> <c-w>w
+"nnoremap <space> <c-w>w
 nnoremap <C-left> <c-w>10<
 nnoremap <C-right> <c-w>10>
 
@@ -166,7 +168,7 @@ nmap ga <Plug>(EasyAlign)
 let g:NERDTreeWinSize=55
 let g:NERDTreeDirArrows=0
 let g:NERDTreeChDirMode=2
-let NERDTreeIgnore=['\~$', 'node_modules', '\.js$[[file]]', '\.map$[[file]]'] "ignore files in NERDTree
+let NERDTreeIgnore=['\~$', 'node_modules'] ", '\.js$[[file]]', '\.map$[[file]]'] ignore files in NERDTree
 " tt to toggle tree
 map tt :NERDTreeToggle<CR><Space>
 " ff to find/reveal current file in tree
