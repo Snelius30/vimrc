@@ -42,6 +42,7 @@ set sessionoptions-=blank
 set foldmethod=manual
 set foldcolumn=1 "defines 1 col at window left, to indicate folding
 set foldlevelstart=99 "start file with all folds opened
+set hidden " allow change buffers without saving
 
 " Y - yunk to end of line
 map Y y$
@@ -113,8 +114,7 @@ if system("powershell.exe Get-ItemProperty -Path
     \ \" HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize\"
     \ -Name AppsUseLightTheme | grep AppsUse | awk '{ print $3 }'") == 0
    set background=dark
-   "colorscheme everforest
-   colorscheme dark_purple
+   colorscheme gruvbox-material
 else
    set background=light
    colorscheme PaperColor
