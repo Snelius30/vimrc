@@ -3,6 +3,11 @@ let &t_SI = "\e[6 q"
 let &t_EI = "\e[1 q"
 set t_u7=
 
+set noswapfile
+"set guifont=Menlo:h13
+"set guifont=Courier:h14
+set guifont=JetBrains_Mono:h19
+"set guifont=Haskplex\ Nerd\ Regular:h16
 set cc=120
 "set number
 set mouse=a
@@ -56,6 +61,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'nelstrom/vim-mac-classic-theme'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -65,7 +71,7 @@ Plug 'tpope/vim-surround'
 Plug 'thaerkh/vim-workspace'
 Plug 'junegunn/vim-easy-align'
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
 Plug 'matze/vim-move'
 Plug 'dyng/ctrlsf.vim'
@@ -78,6 +84,7 @@ Plug 'NLKNguyen/papercolor-theme' " theme
 Plug 'arcticicestudio/nord-vim' "theme
 Plug 'sainnhe/everforest' " theme
 Plug 'shapeoflambda/dark-purple.vim' " theme
+Plug 'lepture/vim-jinja'
 call plug#end()
 
 " Markdown
@@ -109,16 +116,8 @@ else
     "map! <ESC>[1;5D <C-Left>
 endif
 
-if system("powershell.exe Get-ItemProperty -Path
-    \ \" HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize\"
-    \ -Name AppsUseLightTheme | grep AppsUse | awk '{ print $3 }'") == 0
-   set background=dark
-   "colorscheme everforest
-   colorscheme dark_purple
-else
-   set background=light
-   colorscheme PaperColor
-endif
+set background=dark
+colorscheme gruvbox-material
 
 map <C-T> :FZF<CR>
 " recovery last closed split window
@@ -141,8 +140,8 @@ if has("autocmd")
   " Set filetype for JSON5
   au BufNewFile,BufRead *.json5 setfiletype json5
   au FileType go setlocal noet ci pi sts=0 sw=4 ts=4 list
-  au FileType markdown setlocal spell spelllang=ru_yo,en_us
-  au FileType text setlocal spell spelllang=ru_yo,en_us
+  "au FileType markdown setlocal spell spelllang=ru_yo,en_us
+  "au FileType text setlocal spell spelllang=ru_yo,en_us
 endif
 
 " gitgutter
@@ -176,7 +175,7 @@ map ff :NERDTreeFind<CR><Space>
 " // NERDTree
 
 let g:coc_global_extensions = ['coc-pairs', 'coc-eslint', 'coc-tsserver', 'coc-rls', 'coc-json', 'coc-swagger']
-command -nargs=0 Swagger :CocCommand swagger.render
+"command -nargs=0 Swagger :CocCommand swagger.render
 "let g:airline_theme='gruvbox_material'
 let g:airline#extensions#tabline#enabled = 1
 "let g:airline#extensions#tabline#formatter = 'default'
@@ -193,19 +192,20 @@ nnoremap * :keepjumps normal! mi*`i<CR>
 "nmap <silent> <C-y> :normal dd<CR>
 nmap <silent> <C-]> <Plug>(coc-definition)
 nmap <silent> <C-x><C-e> <Plug>(coc-references)
-nnoremap <C-x><C-d> :CocFzfList diagnostics<CR>
-nmap <leader>rn <Plug>(coc-rename)
+"nnoremap <C-x><C-d> :CocFzfList diagnostics<CR>
+"nmap <leader>rn <Plug>(coc-rename)
 
-nmap <silent> <C-x>? :call CocAction('diagnosticInfo')<cr>
+"nmap <silent> <C-x>? :call CocAction('diagnosticInfo')<cr>
 
-nmap <silent> [c :call CocAction('diagnosticNext')<cr>
-nmap <silent> ]c :call CocAction('diagnosticPrevious')<cr>
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+"nmap <silent> [c :call CocAction('diagnosticNext')<cr>
+"nmap <silent> ]c :call CocAction('diagnosticPrevious')<cr>
+"inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+"            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+"inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-y>"
 
 nnoremap <C-S> :ToggleWorkspace<CR>
 nnoremap <C-P> :Buffers<CR>
-nnoremap <C-R> :BTags<CR>
+nnoremap <C-x><C-B> :BTags<CR>
 nnoremap <C-x><C-R> :Tags<CR>
 nnoremap <C-x><C-f> :CtrlSF -G *.ts<Space>
 nnoremap <C-x><C-p> :%!jq .<CR>
@@ -226,15 +226,6 @@ function! s:show_documentation()
     call CocActionAsync('doHover')
   endif
 endfunction
-
-" WSL yank support
-let s:clip = '/mnt/c/Windows/System32/clip.exe'  " change this path according to your mount point
-if executable(s:clip)
-    augroup WSLYank
-        autocmd!
-        autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
-    augroup END
-endif
 
 set directory^=$HOME/.vim/tmp//
 
