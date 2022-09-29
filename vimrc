@@ -11,9 +11,7 @@ set guifont=JetBrains_Mono:h19
 set cc=120
 "set number
 set mouse=a
-if !has('nvim')
-    set ttymouse=sgr
-endif
+set ttymouse=sgr
 set timeoutlen=1000
 set ttimeoutlen=50
 set hlsearch
@@ -58,11 +56,16 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 endif
 
+" ALE Config
+let g:ale_fix_on_save = 1
+let g:ale_completion_enabled = 1
+set omnifunc=ale#completion#OmniFunc
+
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'dense-analysis/ale'
 Plug 'tpope/vim-fugitive'
-Plug 'nelstrom/vim-mac-classic-theme'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -71,9 +74,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tpope/vim-surround'
 Plug 'thaerkh/vim-workspace'
 Plug 'junegunn/vim-easy-align'
-Plug 'ludovicchabant/vim-gutentags'
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
+"Plug 'ludovicchabant/vim-gutentags'
 Plug 'matze/vim-move'
 Plug 'dyng/ctrlsf.vim'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
@@ -136,16 +137,12 @@ map <C-T> :FZF<CR>
 " recovery last closed split window
 nmap <C-x><C-l> :vs<bar>:b#<CR>
 nmap <C-a><C-i> :normal vi}ga:<CR>
-" splits
-"nnoremap <space> <c-w>w
-nnoremap <C-left> <c-w>10<
-nnoremap <C-right> <c-w>10>
 
 " buffers
 nnoremap <C-x><C-w> :bn<CR>
 nnoremap <C-x><C-q> :bp<CR>
 
-let g:enable_bold_font = 0 " for hybrid-material
+let g:enable_bold_font = 0
 
 if has("autocmd")
   " Remember last position.
@@ -187,8 +184,6 @@ map tt :NERDTreeToggle<CR><Space>
 map ff :NERDTreeFind<CR><Space>
 " // NERDTree
 
-let g:coc_global_extensions = ['coc-pairs', 'coc-eslint', 'coc-tsserver', 'coc-rls', 'coc-json', 'coc-swagger']
-"command -nargs=0 Swagger :CocCommand swagger.render
 "let g:airline_theme='gruvbox_material'
 let g:airline#extensions#tabline#enabled = 1
 "let g:airline#extensions#tabline#formatter = 'default'
@@ -201,21 +196,6 @@ let g:airline#extensions#whitespace#checks =
 " Do not jump by search pressed #
 nnoremap * :keepjumps normal! mi*`i<CR>
 
-"nmap <silent> <C-d> :normal yyp<CR>
-"nmap <silent> <C-y> :normal dd<CR>
-nmap <silent> <C-]> <Plug>(coc-definition)
-nmap <silent> <C-x><C-e> <Plug>(coc-references)
-"nnoremap <C-x><C-d> :CocFzfList diagnostics<CR>
-"nmap <leader>rn <Plug>(coc-rename)
-
-"nmap <silent> <C-x>? :call CocAction('diagnosticInfo')<cr>
-
-"nmap <silent> [c :call CocAction('diagnosticNext')<cr>
-"nmap <silent> ]c :call CocAction('diagnosticPrevious')<cr>
-"inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-"            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-"inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-y>"
-
 nnoremap <C-S> :ToggleWorkspace<CR>
 nnoremap <C-P> :Buffers<CR>
 nnoremap <C-x><C-B> :BTags<CR>
@@ -224,25 +204,7 @@ nnoremap <C-x><C-f> :CtrlSF -G *.ts<Space>
 nnoremap <C-x><C-p> :%!jq .<CR>
 nmap <silent><C-x><C-g> :call setbufvar(winbufnr(popup_atcursor(split(system("git log -n 1 -L " . line(".") . ",+1:" . expand("%:p")), "\n"), { "padding": [1,1,1,1], "pos": "botleft", "wrap": 0  })), "&filetype", "git")<CR>
 
-" :Bwipeout[!]
-" wipe all deleted/unloaded buffers
-command! -bar -bang Bwipeout call misc#bwipeout(<bang>0)
-
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-" Highlight the symbol and its references when holding the cursor.
-"autocmd CursorHold * silent call CocActionAsync('highlight')
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocActionAsync('doHover')
-  endif
-endfunction
-
 set directory^=$HOME/.vim/tmp//
-
-let g:javascript_plugin_jsdoc = 1
 
 set showbreak=↪\
 set listchars=tab:→\ ,eol:¬,nbsp:␣,trail:•,extends:⟩,precedes:⟨
