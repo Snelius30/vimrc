@@ -90,7 +90,7 @@ Plug 'lepture/vim-jinja'
 call plug#end()
 
 " Markdown
-let g:markdown_fenced_languages = ['typescript', 'javascript', 'js=javascript', 'json']
+let g:markdown_fenced_languages = ['typescript', 'javascript', 'js=javascript', 'json', 'yaml', 'perl']
 
 let g:ctrlsf_auto_preview = 1
 let g:ctrlsf_regex_pattern = 1
@@ -100,6 +100,9 @@ let g:ctrlsf_search_mode = 'async'
 let g:VM_mouse_mappings = 1
 
 let g:gruvbox_material_disable_italic_comment = 1
+let g:gruvbox_material_background = 'medium'
+" For better performance
+"let g:gruvbox_material_better_performance = 1
 
 "vim-go
 let g:go_def_mode='gopls'
