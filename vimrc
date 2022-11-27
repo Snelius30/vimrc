@@ -4,9 +4,12 @@ let &t_EI = "\e[1 q"
 set t_u7=
 
 set noswapfile
+set nobackup
+set nowritebackup
 "set guifont=Menlo:h13
 "set guifont=Courier:h14
-set guifont=JetBrains_Mono:h19
+"set guifont=Cascadia\ Mono:h16
+set guifont=JetBrains\ Mono:h19
 "set guifont=Haskplex\ Nerd\ Regular:h16
 set cc=120
 "set number
@@ -74,7 +77,6 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tpope/vim-surround'
 Plug 'thaerkh/vim-workspace'
 Plug 'junegunn/vim-easy-align'
-"Plug 'ludovicchabant/vim-gutentags'
 Plug 'matze/vim-move'
 Plug 'dyng/ctrlsf.vim'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
@@ -141,10 +143,6 @@ map <C-T> :FZF<CR>
 nmap <C-x><C-l> :vs<bar>:b#<CR>
 nmap <C-a><C-i> :normal vi}ga:<CR>
 
-" buffers
-nnoremap <C-x><C-w> :bn<CR>
-nnoremap <C-x><C-q> :bp<CR>
-
 let g:enable_bold_font = 0
 
 if has("autocmd")
@@ -181,14 +179,15 @@ let g:NERDTreeWinSize=55
 let g:NERDTreeDirArrows=0
 let g:NERDTreeChDirMode=2
 let NERDTreeIgnore=['\~$', 'node_modules'] ", '\.js$[[file]]', '\.map$[[file]]'] ignore files in NERDTree
+let g:NERDTreeMouseMode=2
 " tt to toggle tree
-map tt :NERDTreeToggle<CR><Space>
+map tt :NERDTreeToggle<CR><C-w>w
 " ff to find/reveal current file in tree
-map ff :NERDTreeFind<CR><Space>
+map ff :NERDTreeFind<CR>
 " // NERDTree
 
 "let g:airline_theme='gruvbox_material'
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 "let g:airline#extensions#tabline#formatter = 'default'
 let g:airline#extensions#coc#enabled=1
 let g:airline#extensions#branch#enabled=1
@@ -211,3 +210,11 @@ set directory^=$HOME/.vim/tmp//
 
 set showbreak=↪\
 set listchars=tab:→\ ,eol:¬,nbsp:␣,trail:•,extends:⟩,precedes:⟨
+
+function! CopyMatches(reg)
+  let hits = []
+  %s//\=len(add(hits, submatch(0))) ? submatch(0) : ''/gne
+  let reg = empty(a:reg) ? '+' : a:reg
+  execute 'let @'.reg.' = join(hits, "\n") . "\n"'
+endfunction
+command! -register CopyMatches call CopyMatches(<q-reg>)
