@@ -10,7 +10,6 @@ set nowritebackup
 "set guifont=Courier:h14
 "set guifont=Cascadia\ Mono:h16
 set guifont=JetBrains\ Mono:h19
-"set guifont=Haskplex\ Nerd\ Regular:h16
 set cc=120
 "set number
 set mouse=a
@@ -77,7 +76,6 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tpope/vim-surround'
 Plug 'thaerkh/vim-workspace'
 Plug 'junegunn/vim-easy-align'
-Plug 'matze/vim-move'
 Plug 'dyng/ctrlsf.vim'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 "Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries'  }
@@ -116,11 +114,6 @@ set t_ut=
 
 if system('echo -n $SSH_CONNECTION') == ''
     set termguicolors
-else
-    "map <ESC>[1;5C <C-Right>
-    "map! <ESC>[1;5C <C-Right>
-    "map <ESC>[1;5D <C-Left>
-    "map! <ESC>[1;5D <C-Left>
 endif
 
 set background=dark
@@ -167,9 +160,6 @@ let g:workspace_session_disable_on_args = 1
 " nmap <C-x><C-t> :TagbarToggle<CR>
 nmap <C-x><C-t> :Tags<CR>
 
-" move plugin
-let g:move_key_modifier = 'C'
-
 " vim-easy-align sds
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
@@ -198,6 +188,8 @@ let g:airline#extensions#whitespace#checks =
 " Do not jump by search pressed #
 nnoremap * :keepjumps normal! mi*`i<CR>
 
+nnoremap <C-k> :move -2<CR>
+nnoremap <C-j> :move +1<CR>
 nnoremap <C-S> :ToggleWorkspace<CR>
 nnoremap <C-P> :Buffers<CR>
 nnoremap <C-x><C-B> :BTags<CR>
