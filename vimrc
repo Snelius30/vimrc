@@ -76,17 +76,18 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tpope/vim-surround'
 Plug 'thaerkh/vim-workspace'
 Plug 'junegunn/vim-easy-align'
-Plug 'dyng/ctrlsf.vim'
+"Plug 'dyng/ctrlsf.vim'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 "Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries'  }
 Plug 'chr4/nginx.vim'
-Plug 'joshdick/onedark.vim' " theme
+"Plug 'joshdick/onedark.vim' " theme
 Plug 'sainnhe/gruvbox-material' " theme
 Plug 'NLKNguyen/papercolor-theme' " theme
-Plug 'arcticicestudio/nord-vim' "theme
-Plug 'sainnhe/everforest' " theme
-Plug 'shapeoflambda/dark-purple.vim' " theme
+"Plug 'arcticicestudio/nord-vim' "theme
+"Plug 'sainnhe/everforest' " theme
+"Plug 'shapeoflambda/dark-purple.vim' " theme
 Plug 'lepture/vim-jinja'
+Plug 'stephpy/vim-yaml'
 call plug#end()
 
 " Markdown
@@ -188,6 +189,8 @@ let g:airline#extensions#whitespace#checks =
 " Do not jump by search pressed #
 nnoremap * :keepjumps normal! mi*`i<CR>
 
+nnoremap <C-h> :vertical resize +5<CR>
+nnoremap <C-l> :vertical resize -5<CR>
 nnoremap <C-k> :move -2<CR>
 nnoremap <C-j> :move +1<CR>
 nnoremap <C-S> :ToggleWorkspace<CR>
