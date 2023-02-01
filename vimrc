@@ -10,6 +10,7 @@ set nowritebackup
 "set guifont=Courier:h14
 "set guifont=Cascadia\ Mono:h16
 set guifont=JetBrains\ Mono:h19
+set guioptions-=r
 set cc=120
 set mouse=a
 set ttymouse=sgr
@@ -91,7 +92,7 @@ Plug 'sainnhe/everforest' " theme
 Plug 'AlessandroYorba/Alduin' " theme
 Plug 'jaredgorski/Mies.vim' " theme
 Plug 'kristijanhusak/vim-hybrid-material' " theme
-Plug 'lepture/vim-jinja'
+" Plug 'lepture/vim-jinja'
 Plug 'stephpy/vim-yaml'
 call plug#end()
 
@@ -199,7 +200,7 @@ nnoremap <C-h> :vertical resize +5<CR>
 nnoremap <C-l> :vertical resize -5<CR>
 nnoremap <C-k> :move -2<CR>
 nnoremap <C-j> :move +1<CR>
-nnoremap <C-S> :ToggleWorkspace<CR>
+" nnoremap <C-S> :ToggleWorkspace<CR>
 nnoremap <C-P> :Buffers<CR>
 nnoremap <C-x><C-B> :BTags<CR>
 nnoremap <C-x><C-R> :Tags<CR>
