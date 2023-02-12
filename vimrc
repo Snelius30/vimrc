@@ -18,15 +18,15 @@ set timeoutlen=1000
 set ttimeoutlen=50
 set hlsearch
 set autoindent
+filetype plugin indent on
 set title
 set updatetime=300
 set autoread
 set relativenumber
 " set cindent
-set smartindent
-" show existing tabs with 4 spaces width
-set tabstop=4
-" when indenting with '>', use 4 spaces width
+" set smartindent
+set tabstop=8
+set softtabstop=4
 set shiftwidth=4
 " On pressing tab, insert 4 spaces
 set expandtab
@@ -79,7 +79,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tpope/vim-surround'
 Plug 'thaerkh/vim-workspace'
 Plug 'junegunn/vim-easy-align'
-"Plug 'dyng/ctrlsf.vim'
+Plug 'dyng/ctrlsf.vim'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 "Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries'  }
 Plug 'chr4/nginx.vim'
