@@ -17,6 +17,8 @@ set ttymouse=sgr
 set timeoutlen=1000
 set ttimeoutlen=50
 set hlsearch
+set incsearch
+" set clipboard=unnamed " Sync clipboadrs with a OS
 set autoindent
 filetype plugin indent on
 set title
@@ -74,7 +76,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'scrooloose/nerdtree'
+" Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tpope/vim-surround'
 Plug 'thaerkh/vim-workspace'
@@ -83,7 +85,7 @@ Plug 'dyng/ctrlsf.vim'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 "Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries'  }
 Plug 'chr4/nginx.vim'
-"Plug 'joshdick/onedark.vim' " theme
+Plug 'joshdick/onedark.vim' " theme
 Plug 'sainnhe/gruvbox-material' " theme
 Plug 'NLKNguyen/papercolor-theme' " theme
 Plug 'arcticicestudio/nord-vim' "theme
@@ -92,11 +94,14 @@ Plug 'sainnhe/everforest' " theme
 Plug 'AlessandroYorba/Alduin' " theme
 Plug 'jaredgorski/Mies.vim' " theme
 Plug 'kristijanhusak/vim-hybrid-material' " theme
-" Plug 'lepture/vim-jinja'
+Plug 'lepture/vim-jinja'
 Plug 'stephpy/vim-yaml'
 call plug#end()
 
-
+" Tree style for netrw
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
 " Plugin settings
 "
 " Markdown
