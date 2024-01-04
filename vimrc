@@ -8,8 +8,8 @@ set nobackup
 set nowritebackup
 "set guifont=Menlo:h13
 "set guifont=Courier:h14
-"set guifont=Cascadia\ Mono:h16
-set guifont=JetBrains\ Mono:h19
+set guifont=IBM\ Plex\ Mono:h16
+" set guifont=JetBrains\ Mono:h15
 set guioptions-=r
 set cc=120
 set mouse=a
@@ -27,7 +27,7 @@ set autoread
 set relativenumber
 " set cindent
 " set smartindent
-set tabstop=8
+set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 " On pressing tab, insert 4 spaces
@@ -40,6 +40,10 @@ set lazyredraw
 "set redrawtime=10000
 " fix some terms colors
 set t_Co=256
+" Dont show @ symbol for long lines. Show lines!!
+set display+=lastline
+" Add new line character at the end of file
+set eol
 
 set undodir=~/.vim/undodir
 set undofile
@@ -66,6 +70,8 @@ endif
 " ALE Config
 let g:ale_fix_on_save = 1
 let g:ale_completion_enabled = 1
+let g:ale_cpp_cc_options = '-std=c++20 -Wall'
+"let g:ale_cpp_clangd_options = '-std=c++20'
 set omnifunc=ale#completion#OmniFunc
 
 call plug#begin('~/.vim/plugged')
@@ -76,36 +82,38 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tpope/vim-surround'
 Plug 'thaerkh/vim-workspace'
 Plug 'junegunn/vim-easy-align'
 Plug 'dyng/ctrlsf.vim'
-Plug 'mg979/vim-visual-multi', {'branch': 'master'}
-"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries'  }
+Plug 'lepture/vim-jinja'
+Plug 'stephpy/vim-yaml'
+" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries'  }
 Plug 'chr4/nginx.vim'
+" Themes
 Plug 'joshdick/onedark.vim' " theme
 Plug 'sainnhe/gruvbox-material' " theme
 Plug 'NLKNguyen/papercolor-theme' " theme
 Plug 'arcticicestudio/nord-vim' "theme
 Plug 'sainnhe/everforest' " theme
-"Plug 'shapeoflambda/dark-purple.vim' " theme
+Plug 'shapeoflambda/dark-purple.vim' " theme
 Plug 'AlessandroYorba/Alduin' " theme
 Plug 'jaredgorski/Mies.vim' " theme
 Plug 'kristijanhusak/vim-hybrid-material' " theme
-Plug 'lepture/vim-jinja'
-Plug 'stephpy/vim-yaml'
 call plug#end()
 
 " Tree style for netrw
 let g:netrw_liststyle = 3
-let g:netrw_browse_split = 4
+let g:netrw_browse_split = 0
 let g:netrw_altv = 1
+let g:netrw_altfile = 1
+"let g:netrw_keepdir = 0
+"let g:netrw_preview = 1
+let g:netrw_winsize = 25
 " Plugin settings
 "
 " Markdown
-let g:markdown_fenced_languages = ['typescript', 'javascript', 'js=javascript', 'json', 'yaml', 'perl']
+let g:markdown_fenced_languages = ['typescript', 'javascript', 'js=javascript', 'json', 'yaml', 'perl', 'bash']
 
 let g:ctrlsf_auto_preview = 1
 let g:ctrlsf_regex_pattern = 1
@@ -120,6 +128,9 @@ let g:gruvbox_material_background = 'medium'
 "let g:gruvbox_material_better_performance = 1
 
 "vim-go
+let g:ale_linters = {
+  \ 'go': ['gopls'],
+  \}
 let g:go_def_mode='gopls'
 let g:go_info_mode='gopls'
 let g:go_def_mapping_enabled = 0
@@ -129,14 +140,6 @@ let g:workspace_undodir                 = $HOME . '/.vim/undodir/'
 let g:workspace_autosave_always         = 0
 let g:workspace_autosave                = 0
 let g:workspace_session_disable_on_args = 1
-
-"NERDTree
-let g:NERDTreeWinSize=55
-let g:NERDTreeDirArrows=0
-let g:NERDTreeChDirMode=2
-let NERDTreeIgnore=['\~$', 'node_modules'] ", '\.js$[[file]]', '\.map$[[file]]'] ignore files in NERDTree
-let g:NERDTreeMouseMode=2
-" // NERDTree
 
 "let g:airline_theme='gruvbox_material'
 let g:airline#extensions#tabline#enabled = 0
@@ -154,8 +157,14 @@ endif
 
 " let g:alduin_Shout_Become_Ethereal = 1
 " let g:alduin_Shout_Aura_Whisper = 1
-set background=dark
-colorscheme gruvbox-material
+if has("gui_running")
+    set background=dark
+    colorscheme gruvbox-material
+    "colorscheme PaperColor
+else
+    set background=dark
+    colorscheme gruvbox-material
+endif
 
 if has('win32')
     if system("powershell.exe Get-ItemProperty -Path
@@ -179,6 +188,7 @@ if has("autocmd")
   au FileType go setlocal noet ci pi sts=0 sw=4 ts=4 list
   au FileType markdown setlocal spell spelllang=ru_yo,en_us
   au FileType text setlocal spell spelllang=ru_yo,en_us
+  au FileType yaml setlocal equalprg=yamlfmt\ -
 endif
 
 
@@ -190,9 +200,9 @@ map <F6> :let $VIM_DIR=expand('%:p:h')<CR>:terminal<CR>cd $VIM_DIR<CR>
 nmap <C-x><C-l> :vs<bar>:b#<CR>
 nmap <C-a><C-i> :normal vi}ga:<CR>
 " tt to toggle tree
-map tt :NERDTreeToggle<CR><C-w>w
+map tt :Vex .<CR>
 " ff to find/reveal current file in tree
-map ff :NERDTreeFind<CR>
+map ff :Vex<CR>
 " nmap <C-x><C-t> :TagbarToggle<CR>
 nmap <C-x><C-t> :Tags<CR>
 " vim-easy-align sds
@@ -209,7 +219,7 @@ nnoremap <C-j> :move +1<CR>
 nnoremap <C-P> :Buffers<CR>
 nnoremap <C-x><C-B> :BTags<CR>
 nnoremap <C-x><C-R> :Tags<CR>
-nnoremap <C-x><C-f> :CtrlSF -G *.ts<Space>
+nnoremap <C-x><C-f> :CtrlSF<Space>
 nnoremap <C-x><C-p> :%!jq .<CR>
 nnoremap <C-x>y :normal viw"*y<CR>
 nmap <silent><C-x><C-g> :call setbufvar(winbufnr(popup_atcursor(split(system("git log -n 1 -L " . line(".") . ",+1:"
