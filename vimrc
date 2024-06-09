@@ -1,6 +1,6 @@
 vim9script
 
-# ======================================== Settings ========================================
+# ======================================== Settings ======================================== {{{
 # cursor changes for the modes
 &t_SI = "\e[6 q"
 &t_EI = "\e[1 q"
@@ -8,15 +8,17 @@ set t_u7=
 set noswapfile
 set nobackup
 set nowritebackup
+#set linespace=3
 #set guifont=Menlo:h13
-#set guifont=Courier:h14
-set guifont=IBM\ Plex\ Mono:h13
+#set guifont=Go\ Mono:h13
+#set guifont=IBM\ Plex\ Mono:h13
+set guifont=BlexMono\ Nerd\ Font:h13
 # set guifont=JetBrains\ Mono:h15
 set guioptions-=r
 set guioptions-=R
 set guioptions-=l
 set guioptions-=L
-set cc=120
+#set cc=120
 set tw=120
 set mouse=a
 set ttymouse=sgr
@@ -29,6 +31,7 @@ set autoindent
 set title
 set updatetime=300
 set autoread
+set number
 set relativenumber
 set tabstop=4
 set softtabstop=4
@@ -61,8 +64,10 @@ set signcolumn=yes
 set directory^=$HOME/.vim/tmp//
 set showbreak=↪\
 set listchars=tab:→\ ,eol:¬,nbsp:␣,trail:•,extends:⟩,precedes:⟨
+set wildmenu
+# }}}
 
-# ======================================== Plugins Install ========================================
+# ======================================== Plugins Install ======================================== {{{
 # Install vim-plug if not found
 if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -94,55 +99,60 @@ Plug 'tpope/vim-eunuch'
 Plug 'sainnhe/gruvbox-material'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'sainnhe/everforest'
-Plug 'joshdick/onedark.vim'
+Plug 'rakr/vim-one'
+Plug 'lifepillar/vim-solarized8'
+Plug 'nordtheme/vim'
 plug#end()
+# }}}
 
-# ======================================== Plugins settings ========================================
+# ======================================== Plugins settings ======================================== {{{
 
 # Tree style for netrw
-g:netrw_liststyle = 3
+g:netrw_liststyle    = 3
 g:netrw_browse_split = 2
-g:netrw_altv = 1
-g:netrw_alto = 1
-g:netrw_altfile = 1
-g:netrw_banner = 0
-# let g:netrw_keepdir = 0
-#let g:netrw_preview = 1
-g:netrw_winsize = 25
+g:netrw_altv         = 1
+g:netrw_alto         = 1
+g:netrw_altfile      = 1
+g:netrw_banner       = 0
+g:netrw_winsize      = 25
+# g:netrw_keepdir = 0
+# g:netrw_preview = 1
 #
 # Markdown
 g:markdown_fenced_languages = ['typescript', 'javascript', 'js=javascript', 'json', 'yaml', 'perl', 'bash']
 
-g:ctrlsf_auto_preview = 1
+g:ctrlsf_auto_preview  = 1
 g:ctrlsf_regex_pattern = 1
-g:ctrlsf_search_mode = 'async'
+g:ctrlsf_search_mode   = 'async'
 
 g:gruvbox_material_disable_italic_comment = 1
-g:gruvbox_material_background = 'medium'
+g:gruvbox_material_background             = 'medium'
 # For better performance
 #let g:gruvbox_material_better_performance = 1
 
 # vim-go
-g:ale_linters = { 'go': ['gopls'] }
-g:go_def_mode = 'gopls'
-g:go_info_mode = 'gopls'
+g:ale_linters            = { 'go': ['gopls'] }
+g:go_fmt_command         = "gofmt"
+g:go_def_mode            = 'gopls'
+g:go_info_mode           = 'gopls'
 g:go_def_mapping_enabled = 0
 
-g:airline#extensions#tabline#enabled = 0
-g:airline#extensions#branch#enabled = 1
+g:airline#extensions#tabline#enabled              = 0
+g:airline#extensions#branch#enabled               = 1
 g:airline#extensions#whitespace#mixed_indent_algo = 2
-g:airline#extensions#whitespace#checks = [ 'indent', 'trailing', 'long', 'conflicts'  ]
-
+g:airline#extensions#whitespace#checks            = [ 'indent', 'trailing', 'long', 'conflicts'  ]
+# }}}
 # Colors
 
-#g:enable_bold_font = 0
+g:enable_bold_font = 0
 
 set termguicolors
 colorscheme gruvbox-material
-set background=dark
+set bg=dark
 
-# ======================================== Startup commands ========================================
+# ======================================== Startup commands ======================================== {{{
 if has("autocmd")
+	#au SessionLoadPost * bwipeout NetrwTreeListing
     # Remember last position.
     au BufReadPost * {
         if line("'\"") > -1 && line("'\"") <= line("$")
@@ -155,16 +165,17 @@ if has("autocmd")
     au FileType go setlocal noet ci pi sts=0 sw=4 ts=4 list
     au FileType markdown setlocal spell spelllang=ru_yo,en_us
     au FileType text setlocal spell spelllang=ru_yo,en_us
-    au FileType yaml setlocal equalprg=yamlfmt\ - keywordprg=ansible-doc
+    au FileType yaml setlocal equalprg=yamlfmt\ - keywordprg=ansible-doc # foldmethod=marker
     au FileType json setlocal shiftwidth=2 tabstop=2 softtabstop=2
 endif
+# }}}
 
-
-# ======================================== Keybindings ========================================
-map <C-T> :FZF --history=/Users/avy/.fzf_history<CR>
-nmap <C-x><C-t> :Tags<CR>
-map <F6> :let $VIM_DIR=expand('%:p:h')<CR>:terminal ++rows=20<CR>cd $VIM_DIR<CR>
+# ======================================== Keybindings ======================================== {{{
+map <C-T> :FZF --history=/Users/avy/.fzf_history --tiebreak=begin<CR>
 map <F5> :terminal ++rows=20<CR>
+map <F6> :let $VIM_DIR=expand('%:p:h')<CR>:terminal ++rows=20<CR>cd $VIM_DIR<CR>
+map <F7> :vertical terminal<CR>
+map <F8> :let $VIM_DIR=expand('%:p:h')<CR>:vertical terminal<CR>cd $VIM_DIR<CR>
 # tt to toggle tree
 map tt :Vex .<CR>
 # ff to find/reveal current file in tree
@@ -182,22 +193,21 @@ nnoremap <C-k> :move -2<CR>
 nnoremap <C-j> :move +1<CR>
 nnoremap <C-P> :Buffers<CR>
 nnoremap <C-x><C-B> :BTags<CR>
-nnoremap <C-x><C-R> :Tags<CR>
+nnoremap <C-x><C-t> :Tags<CR>
 nnoremap <C-x><C-f> :CtrlSF<Space>
-nnoremap <C-x><C-p> :%!jq .<CR>
 nnoremap <D-1> 1gt
 nnoremap <D-2> 2gt
 nnoremap <D-3> 3gt
-imap <c-d> <esc>ddi
-imap <c-u> <esc>gUiwi
-
+imap <C-D> <ESC>ddi
+map <C-F> <ESC>:Ag<SPACE><C-R><C-W><CR>
+map FF :Ag<CR>
 # Show git commit for word under cursor
 nmap <silent><C-x><C-g> :call setbufvar(winbufnr(popup_atcursor(split(system("git log -n 1 -L " . line(".") . ",+1:"
             \.  expand("%:p")), "\n"), { "padding": [1,1,1,1], "pos": "botleft", "wrap": 0  })), "&filetype", "git")<CR>
-
+# }}}
 # set listchars=tab:→\ ,nbsp:␣,trail:•,extends:⟩,precedes:⟨,multispace:\ \ \ ┊
 
-# ======================================== Functions ========================================
+# ======================================== Functions ======================================== {{{
 def WipeBuffersWithoutFiles()
     var bufs = filter(range(1, bufnr('$')), 'bufexists(v:val) && empty(getbufvar(v:val, "&buftype")) && !filereadable(bufname(v:val))')
     if !empty(bufs)
@@ -216,3 +226,5 @@ def BatSync()
     endif
 enddef
 command BatSync BatSync()
+# }}}
+# vim: foldmethod=marker
