@@ -95,6 +95,7 @@ Plug 'dyng/ctrlsf.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries'  }
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-eunuch'
+Plug 'preservim/nerdtree'
 # Themes
 Plug 'sainnhe/gruvbox-material'
 Plug 'NLKNguyen/papercolor-theme'
@@ -102,6 +103,8 @@ Plug 'sainnhe/everforest'
 Plug 'rakr/vim-one'
 Plug 'lifepillar/vim-solarized8'
 Plug 'nordtheme/vim'
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+Plug 'julien/vim-colors-green'
 plug#end()
 # }}}
 
@@ -125,7 +128,7 @@ g:ctrlsf_auto_preview  = 1
 g:ctrlsf_regex_pattern = 1
 g:ctrlsf_search_mode   = 'async'
 
-g:gruvbox_material_disable_italic_comment = 1
+g:gruvbox_material_disable_italic_comment = 0
 g:gruvbox_material_background             = 'medium'
 # For better performance
 #let g:gruvbox_material_better_performance = 1
@@ -147,7 +150,8 @@ g:airline#extensions#whitespace#checks            = [ 'indent', 'trailing', 'lon
 g:enable_bold_font = 0
 
 set termguicolors
-colorscheme gruvbox-material
+#colorscheme gruvbox-material
+colorscheme everforest
 set bg=dark
 
 # ======================================== Startup commands ======================================== {{{
@@ -163,7 +167,7 @@ if has("autocmd")
     au BufNewFile,BufRead *.json5 setfiletype json5
     au BufNewFile,BufRead *.jenkinsfile setfiletype groovy
     au FileType go setlocal noet ci pi sts=0 sw=4 ts=4 list
-    au FileType markdown setlocal spell spelllang=ru_yo,en_us
+    au FileType markdown setlocal spell spelllang=ru_yo,en_us | syntax sync fromstart
     au FileType text setlocal spell spelllang=ru_yo,en_us
     au FileType yaml setlocal equalprg=yamlfmt\ - keywordprg=ansible-doc # foldmethod=marker
     au FileType json setlocal shiftwidth=2 tabstop=2 softtabstop=2
@@ -177,9 +181,9 @@ map <F6> :let $VIM_DIR=expand('%:p:h')<CR>:terminal ++rows=20<CR>cd $VIM_DIR<CR>
 map <F7> :vertical terminal<CR>
 map <F8> :let $VIM_DIR=expand('%:p:h')<CR>:vertical terminal<CR>cd $VIM_DIR<CR>
 # tt to toggle tree
-map tt :Vex .<CR>
+map tt :NERDTreeToggle .<CR>
 # ff to find/reveal current file in tree
-map ff :Vex<CR>
+map ff :NERDTreeToggle %:h<CR>
 # vim-easy-align
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
