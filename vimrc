@@ -8,11 +8,11 @@ set t_u7=
 set noswapfile
 set nobackup
 set nowritebackup
-#set linespace=3
+set linespace=3
 #set guifont=Menlo:h13
-#set guifont=Go\ Mono:h13
+set guifont=GoMono\ Nerd\ Font\ Mono:h13
 #set guifont=IBM\ Plex\ Mono:h13
-set guifont=BlexMono\ Nerd\ Font:h13
+#set guifont=BlexMono\ Nerd\ Font:h13
 # set guifont=JetBrains\ Mono:h15
 set guioptions-=r
 set guioptions-=R
@@ -65,6 +65,8 @@ set directory^=$HOME/.vim/tmp//
 set showbreak=↪\
 set listchars=tab:→\ ,eol:¬,nbsp:␣,trail:•,extends:⟩,precedes:⟨
 set wildmenu
+set completeopt-=preview
+set splitbelow
 # }}}
 
 # ======================================== Plugins Install ======================================== {{{
@@ -96,6 +98,7 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries'  }
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-eunuch'
 Plug 'preservim/nerdtree'
+#Plug 'greeschenko/vim9-ollama'
 # Themes
 Plug 'sainnhe/gruvbox-material'
 Plug 'NLKNguyen/papercolor-theme'
@@ -123,6 +126,10 @@ g:netrw_winsize      = 25
 #
 # Markdown
 g:markdown_fenced_languages = ['typescript', 'javascript', 'js=javascript', 'json', 'yaml', 'perl', 'bash']
+
+#vim-go
+g:go_doc_popup_window = 1
+g:go_term_enabled = 1
 
 g:ctrlsf_auto_preview  = 1
 g:ctrlsf_regex_pattern = 1
@@ -154,6 +161,9 @@ set termguicolors
 colorscheme everforest
 set bg=dark
 
+set listchars=tab:→\ ,nbsp:␣,trail:•,extends:⟩,precedes:⟨,leadmultispace:\ \ \ ┊
+set list
+
 # ======================================== Startup commands ======================================== {{{
 if has("autocmd")
 	#au SessionLoadPost * bwipeout NetrwTreeListing
@@ -169,7 +179,10 @@ if has("autocmd")
     au FileType go setlocal noet ci pi sts=0 sw=4 ts=4 list
     au FileType markdown setlocal spell spelllang=ru_yo,en_us | syntax sync fromstart
     au FileType text setlocal spell spelllang=ru_yo,en_us
-    au FileType yaml setlocal equalprg=yamlfmt\ - keywordprg=ansible-doc # foldmethod=marker
+    au FileType yaml setlocal equalprg=yamlfmt\ - keywordprg=ansible-doc listchars=tab:→\ ,nbsp:␣,trail:•,extends:⟩,precedes:⟨,leadmultispace:\ ┊
+    au FileType yaml.ansible setlocal equalprg=yamlfmt\ - keywordprg=ansible-doc listchars=tab:→\ ,nbsp:␣,trail:•,extends:⟩,precedes:⟨,leadmultispace:\ ┊
+    au FileType groovy setlocal listchars=tab:→\ ,nbsp:␣,trail:•,extends:⟩,precedes:⟨,leadmultispace:\ ┊
+    au FileType Jenkinsfile setlocal listchars=tab:→\ ,nbsp:␣,trail:•,extends:⟩,precedes:⟨,leadmultispace:\ ┊
     au FileType json setlocal shiftwidth=2 tabstop=2 softtabstop=2
 endif
 # }}}
@@ -181,7 +194,7 @@ map <F6> :let $VIM_DIR=expand('%:p:h')<CR>:terminal ++rows=20<CR>cd $VIM_DIR<CR>
 map <F7> :vertical terminal<CR>
 map <F8> :let $VIM_DIR=expand('%:p:h')<CR>:vertical terminal<CR>cd $VIM_DIR<CR>
 # tt to toggle tree
-map tt :NERDTreeToggle .<CR>
+map tt :NERDTreeToggle<CR>
 # ff to find/reveal current file in tree
 map ff :NERDTreeToggle %:h<CR>
 # vim-easy-align
@@ -190,7 +203,7 @@ nmap ga <Plug>(EasyAlign)
 # Do not jump by search pressed *
 nnoremap * :keepjumps normal! mi*`i<CR>
 nnoremap Y y$
-nnoremap <C-s> :wa \| mks! \| qa<CR>
+nnoremap <C-s> :wa \| mks!<CR>
 nnoremap <C-h> :vertical resize +5<CR>
 nnoremap <C-l> :vertical resize -5<CR>
 nnoremap <C-k> :move -2<CR>
@@ -205,11 +218,12 @@ nnoremap <D-3> 3gt
 imap <C-D> <ESC>ddi
 map <C-F> <ESC>:Ag<SPACE><C-R><C-W><CR>
 map FF :Ag<CR>
+nmap ]h <Plug>(GitGutterNextHunk)
+nmap [h <Plug>(GitGutterPrevHunk)
 # Show git commit for word under cursor
 nmap <silent><C-x><C-g> :call setbufvar(winbufnr(popup_atcursor(split(system("git log -n 1 -L " . line(".") . ",+1:"
             \.  expand("%:p")), "\n"), { "padding": [1,1,1,1], "pos": "botleft", "wrap": 0  })), "&filetype", "git")<CR>
 # }}}
-# set listchars=tab:→\ ,nbsp:␣,trail:•,extends:⟩,precedes:⟨,multispace:\ \ \ ┊
 
 # ======================================== Functions ======================================== {{{
 def WipeBuffersWithoutFiles()
