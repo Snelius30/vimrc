@@ -1,5 +1,5 @@
 # Usage
 
 ```shell
-$ https://gitflic.ru/project/avy/dots.git
+$ https://github.com/Snelius30/vimrc.git
 ```
